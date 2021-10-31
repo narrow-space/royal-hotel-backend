@@ -92,20 +92,24 @@ async function run() {
             const service = req.body;
             const result = await servicesCollection.insertOne(service)
             res.json(result);
+            console.log(result);
 
         })
         ///update <status /
 
         app.put('/update/:id', async (req, res) => {
-            console.log(req.params.id);
-            const updateinfo = req.body;
-            // bookingCollection.findOne({_id:ObjectId(id)},{
-            //     $set:{
-            //         updateinfo
+            const id = req.params.id;
+            const updateinfo=req.body.status
+            const filter = { _id:ObjectId(id) };
+            const options = { upsert: true };
+            
+               
+              
+              const result = await bookingCollection.updateOne(filter,{$set:{status:"approved"}} );
+             res.send(result);
 
-            //     }
-            // })
-            console.log(updateinfo);
+             console.log(result);
+
 
         })
 
